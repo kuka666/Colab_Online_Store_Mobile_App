@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "851509541304",
+    "project_id": "colabonlinestore",
+    "storage_bucket": "colabonlinestore.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:851509541304:android:7d1e87eaab4333749b374d",
+        "android_client_info": {
+          "package_name": "com.colab_online_store_mobile_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "851509541304-t8lk35u8rfa2oovj9fdfk0o9g22084s0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.colab_online_store_mobile_app",
+            "certificate_hash": "96c0b2698b8b6ff309d95ddc9825b99d9b32fe4c"
+          }
+        },
+        {
+          "client_id": "851509541304-j2li6uni35bc0u1ls10rvvhkbtqlbhak.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB2qVV5f9n95nsLJCIMKwcERm-Sv5KS2hE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "851509541304-j2li6uni35bc0u1ls10rvvhkbtqlbhak.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
