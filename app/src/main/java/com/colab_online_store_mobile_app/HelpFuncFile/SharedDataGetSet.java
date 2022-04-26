@@ -16,14 +16,6 @@ public class SharedDataGetSet {
     }
 
 
-    public static Boolean CheckForLogin(Context context) {
-
-        SharedPreferences preferences = context.getSharedPreferences("myPrefs", Context.MODE_PRIVATE);
-        Boolean s = preferences.getBoolean("loggedin",false);
-
-        return s;
-
-    }
 
 
 }

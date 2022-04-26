@@ -28,7 +28,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class ProfileLogin extends Fragment implements View.OnClickListener {
-
     EditText Edreg_username;
     EditText Edreg_password;
     SharedPreferences sharedPreferences;
@@ -47,9 +46,6 @@ public class ProfileLogin extends Fragment implements View.OnClickListener {
 
         Edreg_username = (EditText) rootView.findViewById(R.id.inputEmail);
         Edreg_password = (EditText) rootView.findViewById(R.id.inputPassword);
-        sharedPreferences = this.getActivity().getSharedPreferences("pref", Context.MODE_PRIVATE);
-
-
         logBtn.setOnClickListener(this);
         to_reg_Btn.setOnClickListener(this);
 
@@ -111,7 +107,6 @@ public class ProfileLogin extends Fragment implements View.OnClickListener {
 
     private void login(){
 
-
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(com.colab_online_store_mobile_app.PostApi.API_URL)
                 .addConverterFactory(GsonConverterFactory.create());
@@ -131,23 +126,15 @@ public class ProfileLogin extends Fragment implements View.OnClickListener {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if(response.isSuccessful()){
-
-
                     if (response.body() != null) {
-
                         String token = response.body().getToken();
-
-
                         SharedPreferences preferences = getActivity().getSharedPreferences("myPrefs", Context.MODE_PRIVATE);
                         SharedPreferences.Editor prefLoginEdit = preferences.edit();
                         prefLoginEdit.putBoolean("loggedin", true);
                         prefLoginEdit.putString("token", token);
+                        prefLoginEdit.putString("user", add1);
+                        prefLoginEdit.putString("pass", add2);
                         prefLoginEdit.commit();
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString("name", add1);
-                        editor.putString("pass", add2);
-                        editor.commit();
-
 
                         Toast.makeText(getContext(), token, Toast.LENGTH_SHORT).show();
 
@@ -158,7 +145,7 @@ public class ProfileLogin extends Fragment implements View.OnClickListener {
                     }
 
                 }else {
-                    Toast.makeText(getContext(), "login no correct :(", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "login no correct:(", Toast.LENGTH_SHORT).show();
                 }
             }
 

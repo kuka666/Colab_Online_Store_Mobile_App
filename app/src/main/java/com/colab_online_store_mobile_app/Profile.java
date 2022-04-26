@@ -1,10 +1,14 @@
 package com.colab_online_store_mobile_app;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.Gravity;
@@ -43,37 +47,69 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Profile extends Fragment {
 
     SharedPreferences sharedPreferences;
-    EditText username;
-    EditText password;
-    EditText address;
-    Button button;
+    EditText username,password,address,fname,lname,phonenumber;
+    Button buttonLogout,save;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
-
         View rootView = inflater.inflate(R.layout.activity_profile, container, false);
-
-        username =  (EditText) rootView.findViewById(R.id.inputName);
-        password =  (EditText) rootView.findViewById(R.id.inputPassword);
-        address =  (EditText) rootView.findViewById(R.id.inputAddress);
-        button = (Button) rootView.findViewById(R.id.btnSave);
-        sharedPreferences = this.getActivity().getSharedPreferences("pref", Context.MODE_PRIVATE);
-        username.setText(sharedPreferences.getString("name", ""));
-        password.setText(sharedPreferences.getString("pass", ""));
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("address", address.getText().toString());
-        editor.commit();
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String value=address.getText().toString();
-                address.setText(value);
-            }
-        });
+        sharedPreferences = this.getActivity().getSharedPreferences("myPrefs", MODE_PRIVATE);
+        if(sharedPreferences.getBoolean("check_login",true)) {
+            username = (EditText) rootView.findViewById(R.id.inputName);
+            password = (EditText) rootView.findViewById(R.id.inputPassword);
+            address = (EditText) rootView.findViewById(R.id.inputAddress);
+            fname = (EditText) rootView.findViewById(R.id.inputFirstName);
+            lname = (EditText) rootView.findViewById(R.id.inputLastName);
+            phonenumber = (EditText) rootView.findViewById(R.id.inputPhoneNumber);
+            save = (Button) rootView.findViewById(R.id.btnSave);
+            buttonLogout = (Button) rootView.findViewById(R.id.btnLogout);
+            username.setText(sharedPreferences.getString("user", ""));
+            password.setText(sharedPreferences.getString("pass", ""));
+            buttonLogout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    SharedPreferences.Editor prefLoginEdit = sharedPreferences.edit();
+                    prefLoginEdit.putBoolean("loggedin", false);
+                    prefLoginEdit.commit();
+                    Fragment fragment = null;
+                    fragment = new ProfileLogin();
+                    replaceFragment(fragment);
+                }
+            });
+            String kuka = sharedPreferences.getString("user", "");
+            save.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String add  = address.getText().toString();
+                    String firstname = fname.getText().toString();
+                    String lastname = lname.getText().toString();
+                    String number = phonenumber.getText().toString();
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString(kuka, add);
+                    editor.putString(kuka+"firstname", firstname);
+                    editor.putString(kuka+"lastname", lastname);
+                    editor.putString(kuka+"phonenumber",number);
+                    editor.commit();
+                }
+            });
+            address.setText(sharedPreferences.getString(kuka, ""));
+            fname.setText(sharedPreferences.getString(kuka+"firstname", ""));
+            lname.setText(sharedPreferences.getString(kuka+"lastname", ""));
+            phonenumber.setText(sharedPreferences.getString(kuka+"phonenumber", ""));
+        }
+        else{
+            new ProfileLogin();
+        }
         return rootView;
 
+    }
+    public void replaceFragment(Fragment someFragment) {
+
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, someFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
 
     }
 

@@ -1,5 +1,6 @@
 package com.colab_online_store_mobile_app;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,77 +16,64 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
 public class MainActivity extends AppCompatActivity {
-
+    SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
 
-
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
 
-        if (savedInstanceState == null) {
+        if (savedInstanceState == null&&CheckForLogin()==false) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                     new ProfileLogin()).commit();
         }
-
-
-
+        else{
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                    new ListProduct()).commit();
+        }
 
     }
 
-
+    Fragment selectedFragment = null;
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    Fragment selectedFragment = null;
-
-                    switch (item.getItemId()) {
-                        case R.id.nav_home:
-                            if (SharedDataGetSet.CheckForLogin(getApplicationContext())){
+                    if (CheckForLogin()==true) {
+                        switch (item.getItemId()) {
+                            case R.id.nav_home:
                                 selectedFragment = new ListProduct();
-                            }
-                            else {
-                                Toast.makeText(getApplicationContext(), "Please login", Toast.LENGTH_SHORT).show();
-                                selectedFragment = new ProfileLogin();
-                            }
-                            break;
-                        case R.id.nav_cart:
-                            if (SharedDataGetSet.CheckForLogin(getApplicationContext())){
+                                break;
+                            case R.id.navigation_catalog:
+                                break;
+                            case R.id.navigation_search:
+                                break;
+                            case R.id.nav_cart:
                                 selectedFragment = new Summary();
-                            }
-                            else {
-                                Toast.makeText(getApplicationContext(), "Please login", Toast.LENGTH_SHORT).show();
-                                selectedFragment = new ProfileLogin();
-                            }
-                            break;
-                        case R.id.navigation_catalog:
-                            selectedFragment = new ListProduct();
-                            break;
-                        case R.id.navigation_search:
-                            selectedFragment = new ListProduct();
-                            break;
-                        case R.id.nav_profile:
-                            if (SharedDataGetSet.CheckForLogin(getApplicationContext())){
+                                break;
+                            case R.id.nav_profile:
                                 selectedFragment = new Profile();
-                            }
-                            else {
-                                Toast.makeText(getApplicationContext(), "Please login", Toast.LENGTH_SHORT).show();
-                                selectedFragment = new ProfileLogin();
-                            }
+                                break;
+                        }
+                    } else {
+                        selectedFragment = new ProfileLogin();
                     }
-
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                             selectedFragment).commit();
-
                     return true;
                 }
             };
 
+    public Boolean CheckForLogin() {
 
+        SharedPreferences preferences = getSharedPreferences("myPrefs", Context.MODE_PRIVATE);
+        Boolean s = preferences.getBoolean("loggedin",false);
 
+        return s;
+
+    }
 
 }

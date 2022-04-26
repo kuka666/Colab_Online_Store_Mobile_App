@@ -109,9 +109,6 @@ public class ListProduct extends Fragment {
                             String str_image = productItem.getImage();
                             imageProduct.add(str_image);
 
-
-
-
                         }
 
                         initRecyclerView();
