@@ -33,7 +33,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-
 public class Summary extends Fragment implements View.OnClickListener {
 
 
@@ -71,7 +70,6 @@ public class Summary extends Fragment implements View.OnClickListener {
     }
 
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -82,7 +80,6 @@ public class Summary extends Fragment implements View.OnClickListener {
     }
 
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     public void ClearButtonClick()
     {
         GetClear();
@@ -90,7 +87,6 @@ public class Summary extends Fragment implements View.OnClickListener {
 
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     private void GetClear()
     {
 
@@ -101,21 +97,20 @@ public class Summary extends Fragment implements View.OnClickListener {
 
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(com.colab_online_store_mobile_app.PostApi.API_URL)
+                .baseUrl(PostApi.API_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
 
 
 
-        com.colab_online_store_mobile_app.PostApi postApi= retrofit.create(com.colab_online_store_mobile_app.PostApi.class);
+        PostApi postApi= retrofit.create(PostApi.class);
 
         String token_ex_ap = SharedDataGetSet.getMySavedToken(getActivity());
 
         Call<ResponseBody> call = postApi.getClearCart(token_ex_ap);
 
         call.enqueue(new Callback<ResponseBody>() {
-            @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
@@ -127,7 +122,7 @@ public class Summary extends Fragment implements View.OnClickListener {
 
                     if (response.body() != null) {
 
-                        EdTotal.setText("0");
+                        EdTotal.setText("");
 
                         String message = "Clear";
 
@@ -165,7 +160,6 @@ public class Summary extends Fragment implements View.OnClickListener {
     }
 
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     private void showListProduct() {
 
         final ProgressDialog mProgressDialog = new ProgressDialog(getContext());
@@ -175,11 +169,11 @@ public class Summary extends Fragment implements View.OnClickListener {
 
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(com.colab_online_store_mobile_app.PostApi.API_URL)
+                .baseUrl(PostApi.API_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        com.colab_online_store_mobile_app.PostApi postApi= retrofit.create(com.colab_online_store_mobile_app.PostApi.class);
+        PostApi postApi= retrofit.create(PostApi.class);
 
         String token_ex_ap = SharedDataGetSet.getMySavedToken(getActivity());
 
@@ -203,7 +197,7 @@ public class Summary extends Fragment implements View.OnClickListener {
                         List <ProductItemModel> productCart = summary_res.getCart();
 
                         Integer int_total = summary_res.getTotal();
-                        String str_total_for_view = int_total.toString() + "$";
+                        String str_total_for_view = int_total.toString() + "₸";
                         EdTotal.setText(str_total_for_view);
 
 
@@ -225,7 +219,8 @@ public class Summary extends Fragment implements View.OnClickListener {
                             Integer price_product = product.getPrice();
                             priceProduct.add(price_product);
 
-
+                            String str_image = product.getImage();
+                            imageProduct.add(str_image);
 
                         }
 
@@ -253,13 +248,12 @@ public class Summary extends Fragment implements View.OnClickListener {
 
 
     private void initRecyclerView(){
-        com.colab_online_store_mobile_app.RecyclerSummary adapter = new com.colab_online_store_mobile_app.RecyclerSummary(getActivity(), idProduct, titleProduct, descProduct, priceProduct, descProduct);
+        RecyclerSummary adapter = new RecyclerSummary(getActivity(), idProduct, titleProduct, descProduct, priceProduct, descProduct,imageProduct);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     private void updateSummaryList() {
         idProduct.clear();
         titleProduct.clear();
@@ -268,12 +262,12 @@ public class Summary extends Fragment implements View.OnClickListener {
         imageProduct.clear();
 
 
-        com.colab_online_store_mobile_app.RecyclerSummary adapter = new com.colab_online_store_mobile_app.RecyclerSummary(getActivity(), idProduct, titleProduct, descProduct, priceProduct, descProduct);
+        RecyclerSummary adapter = new RecyclerSummary(getActivity(), idProduct, titleProduct, descProduct, priceProduct, descProduct, imageProduct);
         adapter.notifyDataSetChanged();
 
         recyclerView.setAdapter(adapter);
 
-        if ( com.colab_online_store_mobile_app.InternetUtil.isInternetOnline(getActivity()) ){
+        if ( InternetUtil.isInternetOnline(getActivity()) ){
             showListProduct();
         }
 
@@ -281,12 +275,20 @@ public class Summary extends Fragment implements View.OnClickListener {
     }
 
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onResume() {
         super.onResume();
-
         updateSummaryList();
 
     }
+
+
+
+
+
+
+
+
+
+
 }

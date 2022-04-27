@@ -10,10 +10,6 @@
         android:icon="@drawable/ic_baseline_format_list_bulleted_24"
         android:title="Catalog" />
     <item
-        android:id="@+id/navigation_search"
-        android:icon="@drawable/ic_baseline_search_24"
-        android:title="Search" />
-    <item
         android:id="@+id/nav_cart"
         android:icon="@drawable/ic_baseline_shopping_cart_24"
         android:title="Cart" />

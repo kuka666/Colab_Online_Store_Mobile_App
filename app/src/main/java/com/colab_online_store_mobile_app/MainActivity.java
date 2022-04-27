@@ -3,16 +3,23 @@ package com.colab_online_store_mobile_app;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 
 import android.view.MenuItem;
-import android.widget.Toast;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.CompositePageTransformer;
+import androidx.viewpager2.widget.MarginPageTransformer;
+import androidx.viewpager2.widget.ViewPager2;
 
-import com.colab_online_store_mobile_app.HelpFuncFile.SharedDataGetSet;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -48,8 +55,6 @@ public class MainActivity extends AppCompatActivity {
                                 selectedFragment = new ListProduct();
                                 break;
                             case R.id.navigation_catalog:
-                                break;
-                            case R.id.navigation_search:
                                 break;
                             case R.id.nav_cart:
                                 selectedFragment = new Summary();

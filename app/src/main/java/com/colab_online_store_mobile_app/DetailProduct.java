@@ -198,13 +198,12 @@ public class DetailProduct extends Fragment implements View.OnClickListener {
                     if (response.body() != null) {
 
                         String message = "+ to cart";
-
                         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
 
                     }
 
                 }else {
-                    Log.d("fail", "fail");
+                    Log.d("fail", my_token+" "+data);
                 }
 
 

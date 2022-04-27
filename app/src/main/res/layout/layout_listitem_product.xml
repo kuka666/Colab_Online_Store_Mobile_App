@@ -9,36 +9,40 @@
     android:background="#fff">
 
 
-
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text=""
-        />
-
-    <TextView
-        android:id="@+id/desc"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text=""
-        />
-
-
-    <TextView
-        android:id="@+id/price"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:textSize="22dp"
-        />
-
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:id="@+id/list_image"
         />
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Виноград африканский"
+            android:maxLength="18"
+            android:textColor="@color/black"
+            />
+    <LinearLayout
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
+        <TextView
+            android:layout_marginTop="10dp"
+            android:id="@+id/price"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="800"
+            android:textColor="@color/black"
+            android:textSize="22dp"
+            android:textStyle="bold" />
 
-
+        <ImageButton
+            android:id="@+id/btn_add_cart"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_baseline_shopping_cart_24"
+            android:backgroundTint="#19ab4b"
+            android:background="@drawable/rounded_corner"/>
+    </LinearLayout>
 </LinearLayout>

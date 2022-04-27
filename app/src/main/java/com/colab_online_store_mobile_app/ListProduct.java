@@ -1,41 +1,56 @@
 package com.colab_online_store_mobile_app;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.app.ProgressDialog;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.CompositePageTransformer;
+import androidx.viewpager2.widget.MarginPageTransformer;
+import androidx.viewpager2.widget.ViewPager2;
 
+import com.colab_online_store_mobile_app.HelpFuncFile.SharedDataGetSet;
 import com.colab_online_store_mobile_app.model.ProductModel;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class ListProduct extends Fragment {
-
-
+public class ListProduct extends Fragment  {
+    private ViewPager2 viewPager2;
+    private Handler sliderHandler = new Handler();
     private ArrayList<Integer> idProduct = new ArrayList<>();
     private ArrayList<String> titleProduct = new ArrayList<>();
     private ArrayList<String> descProduct = new ArrayList<>();
     private ArrayList<Integer> priceProduct = new ArrayList<>();
     private ArrayList<String> slugProduct = new ArrayList<>();
     private ArrayList<String> imageProduct = new ArrayList<>();
-
+    String slug_for_btn;
     private RecyclerView recyclerView;
-
 
 
     @Nullable
@@ -45,14 +60,52 @@ public class ListProduct extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_list_product, container, false);
 
-
         recyclerView = rootView.findViewById(R.id.recycler_list_product);
 
+        viewPager2 = rootView.findViewById(R.id.viewPagerImageSlider);
+
+        List<SliderItem> sliderItems = new ArrayList<>();
+        sliderItems.add(new SliderItem(R.drawable.slider1));
+        sliderItems.add(new SliderItem(R.drawable.slider2));
+        sliderItems.add(new SliderItem(R.drawable.slider3));
+        sliderItems.add(new SliderItem(R.drawable.slider4));
+        sliderItems.add(new SliderItem(R.drawable.slider5));
+        viewPager2.setAdapter(new SliderAdapter(sliderItems, viewPager2));
+
+        viewPager2.setClipToPadding(false);
+        viewPager2.setClipChildren(false);
+        viewPager2.setOffscreenPageLimit(3);
+        viewPager2.getChildAt(0).setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
+
+        CompositePageTransformer compositePageTransformer = new CompositePageTransformer();
+        compositePageTransformer.addTransformer(new MarginPageTransformer(40));
+        compositePageTransformer.addTransformer(new ViewPager2.PageTransformer() {
+            @Override
+            public void transformPage(@NonNull View page, float position) {
+                float r = 1 - Math.abs(position);
+                page.setScaleY(0.85f + r * 0.15f);
+            }
+        });
+
+        viewPager2.setPageTransformer(compositePageTransformer);
+
+        viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                sliderHandler.removeCallbacks(sliderRunnable);
+                sliderHandler.postDelayed(sliderRunnable, 3000);
+            }
+        });
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity().getApplicationContext(),3);
+
+        gridLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
 
         return rootView;
 
 
     }
+
 
 
     private void showListProduct() {
@@ -137,7 +190,7 @@ public class ListProduct extends Fragment {
     private void initRecyclerView(){
         com.colab_online_store_mobile_app.RecyclerListProduct adapter = new com.colab_online_store_mobile_app.RecyclerListProduct(getActivity(), idProduct, titleProduct, descProduct, priceProduct, slugProduct, imageProduct);
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),2));
     }
 
 
@@ -170,12 +223,12 @@ public class ListProduct extends Fragment {
 
     }
 
-
-
-
-
-
-
+    private Runnable sliderRunnable = new Runnable() {
+        @Override
+        public void run() {
+            viewPager2.setCurrentItem(viewPager2.getCurrentItem() + 1);
+        }
+    };
 
 
 
