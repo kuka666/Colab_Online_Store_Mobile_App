@@ -75,9 +75,6 @@ public class RecyclerSearch extends RecyclerView.Adapter<RecyclerSearch.ViewHold
         Picasso.get().load(str_image).into(holder.TImage);
 
 
-
-
-
     }
 
     @Override

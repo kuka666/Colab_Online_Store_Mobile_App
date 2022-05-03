@@ -12,11 +12,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -48,10 +51,8 @@ public class Search extends Fragment {
     private ArrayList<String> slugProduct = new ArrayList<>();
     SharedPreferences sharedPreferences;
     private RecyclerView recyclerView;
-
-
-
-
+    EditText edit;
+    ImageButton ib;
 
     @Nullable
     @Override
@@ -61,7 +62,20 @@ public class Search extends Fragment {
         View rootView = inflater.inflate(R.layout.search, container, false);
         recyclerView = rootView.findViewById(R.id.recycler_list_product);
         sharedPreferences = this.getActivity().getSharedPreferences("myPrefs", MODE_PRIVATE);
-
+        edit = (EditText) rootView.findViewById(R.id.edit_search);
+        ib = (ImageButton) rootView.findViewById(R.id.search);
+        ib.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String search_str  = edit.getText().toString();
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("search", search_str);
+                editor.commit();
+                Fragment fragment = null;
+                fragment = new Search();
+                replaceFragment(fragment);
+            }
+        });
         return rootView;
 
 
@@ -102,7 +116,7 @@ public class Search extends Fragment {
                         List<ProductModel> productList = response.body();
                         int i = 0;
                         for(ProductModel productItem:productList){
-                            if(productList.get(i).getTitle().equals(sharedPreferences.getString("search",""))) {
+                            if(productList.get(i).getTitle().toLowerCase(Locale.ROOT).contains(sharedPreferences.getString("search",""))) {
                                 Integer id_product = productList.get(i).getId();
                                 idProduct.add(id_product);
 
@@ -181,6 +195,14 @@ public class Search extends Fragment {
     public void onResume() {
         super.onResume();
         updateSummaryList();
+
+    }
+    public void replaceFragment(Fragment someFragment) {
+
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, someFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
 
     }
 
