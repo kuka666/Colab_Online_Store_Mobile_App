@@ -199,7 +199,7 @@ public class Summary extends Fragment implements View.OnClickListener {
                         List <ProductItemModel> productCart = summary_res.getCart();
 
                         Integer int_total = summary_res.getTotal();
-                        String str_total_for_view = int_total.toString() + "₸";
+                        String str_total_for_view = int_total.toString() + " ₸";
                         visa.setText(str_total_for_view);
 
                         for(ProductItemModel productItem:productCart){
@@ -282,15 +282,6 @@ public class Summary extends Fragment implements View.OnClickListener {
         updateSummaryList();
 
     }
-
-
-
-
-
-
-
-
-
 
 
 }

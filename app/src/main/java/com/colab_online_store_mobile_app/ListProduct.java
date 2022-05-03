@@ -4,6 +4,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
+import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -16,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,10 +54,10 @@ public class ListProduct extends Fragment  {
     private ArrayList<Integer> priceProduct = new ArrayList<>();
     private ArrayList<String> slugProduct = new ArrayList<>();
     private ArrayList<String> imageProduct = new ArrayList<>();
-    String slug_for_btn;
     TextView address;
     private RecyclerView recyclerView;
-
+    EditText edit;
+    ImageButton ib;
 
     @Nullable
     @Override
@@ -121,6 +123,21 @@ public class ListProduct extends Fragment  {
                 replaceFragment(fragment);
             }
         });
+        edit = (EditText) rootView.findViewById(R.id.edit_search);
+        ib = (ImageButton) rootView.findViewById(R.id.search);
+        ib.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String search_str  = edit.getText().toString();
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("search", search_str);
+                editor.commit();
+                Fragment fragment = null;
+                fragment = new Search();
+                replaceFragment(fragment);
+            }
+        });
+
         return rootView;
 
 
@@ -181,6 +198,10 @@ public class ListProduct extends Fragment  {
 
                             String str_image = productItem.getImage();
                             imageProduct.add(str_image);
+                            //Search
+
+
+
 
                         }
 
