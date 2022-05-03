@@ -121,7 +121,7 @@ public class RecyclerListProduct extends RecyclerView.Adapter<RecyclerListProduc
                             if (response.body() != null) {
 
                                 String message = "+ to cart";
-
+                                Toast.makeText(view.getContext(), message, Toast.LENGTH_SHORT).show();
 
                             }
 

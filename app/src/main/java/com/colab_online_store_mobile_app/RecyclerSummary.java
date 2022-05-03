@@ -79,24 +79,7 @@ public class RecyclerSummary extends RecyclerView.Adapter<RecyclerSummary.ViewHo
 
 
 
-        holder.parentLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-
-                Bundle bundle = new Bundle();
-                bundle.putString("key_slug",mSlug.get(position));
-                AppCompatActivity activity = (AppCompatActivity) view.getContext();
-                Fragment myFragment = new DetailProduct();
-                myFragment.setArguments(bundle);
-                activity.getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragment_container, myFragment)
-                        .addToBackStack(null)
-                        .commit();
-
-            }
-        });
 
     }
 

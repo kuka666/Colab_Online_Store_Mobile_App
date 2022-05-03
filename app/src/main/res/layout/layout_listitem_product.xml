@@ -16,10 +16,10 @@
         />
         <TextView
             android:id="@+id/title"
-            android:layout_width="150dp"
+            android:layout_width="160dp"
             android:layout_height="wrap_content"
             android:text="Виноград африканский"
-            android:maxLength="18"
+            android:maxLength="16"
             android:textColor="@color/black"
             />
     <LinearLayout

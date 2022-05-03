@@ -43,8 +43,8 @@ public class Summary extends Fragment implements View.OnClickListener {
     private ArrayList<String> imageProduct = new ArrayList<>();
 
     private RecyclerView recyclerView;
+    Button visa;
 
-    TextView EdTotal;
 
 
 
@@ -58,12 +58,11 @@ public class Summary extends Fragment implements View.OnClickListener {
 
         recyclerView = rootView.findViewById(R.id.recycler_list_product);
 
-        Button ClearBtn = (Button) rootView.findViewById(R.id.clear_btn);
+        TextView ClearBtn = (TextView) rootView.findViewById(R.id.clear_btn);
 
-        EdTotal =  (TextView) rootView.findViewById(R.id.lt_summary_total);
-
+        visa = (Button) rootView.findViewById(R.id.visaButton);
         ClearBtn.setOnClickListener(this);
-
+        visa.setOnClickListener(this);
         return rootView;
 
 
@@ -75,6 +74,13 @@ public class Summary extends Fragment implements View.OnClickListener {
         switch (view.getId()) {
             case R.id.clear_btn:
                 ClearButtonClick();
+                String message = "Clear";
+                Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.visaButton:
+                ClearButtonClick();
+                String paid = "Paid";
+                Toast.makeText(getContext(), paid, Toast.LENGTH_SHORT).show();
                 break;
         }
     }
@@ -122,11 +128,7 @@ public class Summary extends Fragment implements View.OnClickListener {
 
                     if (response.body() != null) {
 
-                        EdTotal.setText("");
-
-                        String message = "Clear";
-
-                        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+                        visa.setText("");
 
                     }
 
@@ -198,8 +200,7 @@ public class Summary extends Fragment implements View.OnClickListener {
 
                         Integer int_total = summary_res.getTotal();
                         String str_total_for_view = int_total.toString() + "₸";
-                        EdTotal.setText(str_total_for_view);
-
+                        visa.setText(str_total_for_view);
 
                         for(ProductItemModel productItem:productCart){
 
@@ -281,6 +282,7 @@ public class Summary extends Fragment implements View.OnClickListener {
         updateSummaryList();
 
     }
+
 
 
 

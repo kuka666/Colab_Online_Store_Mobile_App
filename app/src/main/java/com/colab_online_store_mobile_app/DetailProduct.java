@@ -1,6 +1,9 @@
 package com.colab_online_store_mobile_app;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.app.ProgressDialog;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import android.util.Log;
@@ -32,11 +35,10 @@ public class DetailProduct extends Fragment implements View.OnClickListener {
 
     TextView tv_dp_title;
     TextView tv_dp_desc;
-    TextView tv_dp_price;
     ImageView iv_dp_image;
-
+    SharedPreferences sharedPreferences;
     String slug_for_btn;
-
+    Button addBtn;
 
 
 
@@ -51,11 +53,10 @@ public class DetailProduct extends Fragment implements View.OnClickListener {
 
         tv_dp_title = (TextView) rootView.findViewById(R.id.ltv_dp_title);
         tv_dp_desc = (TextView) rootView.findViewById(R.id.ltv_dp_desc);
-        tv_dp_price = (TextView) rootView.findViewById(R.id.ltv_dp_price);
         iv_dp_image = (ImageView) rootView.findViewById(R.id.liv_dp_image);
 
-        Button addBtn = (Button) rootView.findViewById(R.id.btn_add_cart);
-
+        addBtn = (Button) rootView.findViewById(R.id.btn_add_cart);
+        sharedPreferences = this.getActivity().getSharedPreferences("myPrefs", MODE_PRIVATE);
 
 
 
@@ -65,7 +66,7 @@ public class DetailProduct extends Fragment implements View.OnClickListener {
             String bundle_id = bundle.getString("key_slug");
             GetServerData(bundle_id);
         }
-
+        addBtn.setText(sharedPreferences.getString("price",""));
         addBtn.setOnClickListener(this);
 
 
@@ -130,14 +131,13 @@ public class DetailProduct extends Fragment implements View.OnClickListener {
                         String str_dp_desc = productItem.getDesc();
                         slug_for_btn = productItem.getSlug();
                         Integer int_dp_price  = productItem.getPrice();
-                        String str_dp_price = int_dp_price.toString() + "$";
+                        String str_dp_price = int_dp_price.toString() + " ₸";
                         String str_dp_image = productItem.getImage();
 
 
                         tv_dp_title.setText(str_dp_title);
                         tv_dp_desc.setText(str_dp_desc);
-                        tv_dp_price.setText(str_dp_price);
-
+                        addBtn.setText(str_dp_price);
                         Picasso.get().load(str_dp_image).into(iv_dp_image);
 
 

@@ -3,70 +3,68 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Title"
+    android:orientation="vertical"
+    android:background="@color/white">
+    <ImageView
+        android:layout_width="400dp"
+        android:layout_height="400dp"
+        android:id="@+id/liv_dp_image"
+        android:src="@drawable/graphe"
         />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text=""
+        android:text="Виноград Грузинский"
+        android:textColor="@color/black"
+        android:gravity="center"
         android:textSize="18dp"
         android:id="@+id/ltv_dp_title"
         />
-
-    <TextView
+    <View
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#f1f1f1"
+        android:layout_marginBottom="15dp"/>
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Description"
-        />
+        android:orientation="vertical"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Description"
+            android:textColor="@color/black"
+            android:textStyle="normal"
+            android:textSize="15dp"
+            />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:textSize="18dp"
-        android:id="@+id/ltv_dp_desc"
-        />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="175dp"
+            android:text="Помимо участия в процессе расщепления белков, бромелайн также оказывает противовоспалительное воздействие и борется с отёками. Вместе с содержащейся в ананасе клетчаткой, этот фермент способствует нормализации перистальтики кишечника, благотворно влияет на пищеварение."
+            android:textSize="18dp"
+            android:id="@+id/ltv_dp_desc"
+            />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:textSize="18dp"
-        android:id="@+id/ltv_dp_cart_url"
-        />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Price"
-        />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:textSize="22dp"
-        android:id="@+id/ltv_dp_price"
-        />
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/liv_dp_image"
-        />
-
+    </LinearLayout>
     <Button
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+
         android:text="Add to cart"
+        android:textStyle="bold"
+        android:textSize="25sp"
+        android:textColor="@color/white"
         android:background="@color/colorPrimary"
         android:id="@+id/btn_add_cart"
-        />
-
+        android:backgroundTint="#50C878"
+        android:drawableRight="@drawable/icon_plus"
+        android:drawablePadding="10dp"
+        android:paddingRight="140dp"
+        android:gravity="right|center"/>
 </LinearLayout>

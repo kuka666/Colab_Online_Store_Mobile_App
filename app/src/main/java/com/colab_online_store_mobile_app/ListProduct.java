@@ -14,11 +14,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -50,6 +53,7 @@ public class ListProduct extends Fragment  {
     private ArrayList<String> slugProduct = new ArrayList<>();
     private ArrayList<String> imageProduct = new ArrayList<>();
     String slug_for_btn;
+    TextView address;
     private RecyclerView recyclerView;
 
 
@@ -100,7 +104,23 @@ public class ListProduct extends Fragment  {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity().getApplicationContext(),3);
 
         gridLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-
+        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("myPrefs", MODE_PRIVATE);
+        address = (TextView) rootView.findViewById(R.id.address_list_product);
+        String kuka = sharedPreferences.getString("user", "");
+        if(sharedPreferences.getString(kuka, "").isEmpty()){
+            address.setText("Укажите свое адрес в профиле");
+        }
+        else{
+            address.setText(sharedPreferences.getString(kuka, ""));
+        }
+        address.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Fragment fragment = null;
+                fragment = new Profile();
+                replaceFragment(fragment);
+            }
+        });
         return rootView;
 
 
@@ -229,6 +249,14 @@ public class ListProduct extends Fragment  {
             viewPager2.setCurrentItem(viewPager2.getCurrentItem() + 1);
         }
     };
+    public void replaceFragment(Fragment someFragment) {
+
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, someFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+
+    }
 
 
 

@@ -7,7 +7,7 @@
     android:background="@color/white">
 
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <RelativeLayout
@@ -16,13 +16,39 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true">
 
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/logo" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/address_list_product"
+                android:text="Укажите адрес в профиле"
+                android:layout_marginLeft="200dp"
+                android:textColor="@color/black"
+                android:layout_marginTop="40dp"/>
+
+
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/viewPagerImageSlider"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="80dp"
+                android:layout_marginTop="160dp"
                 android:paddingStart="80dp"
                 android:paddingEnd="80dp" />
+
+            <SearchView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="100dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/seacrcher"
+                android:queryHint="Find any product"
+                android:textAlignment="center" />
         </RelativeLayout>
         <RelativeLayout
             android:id="@+id/footer"
@@ -48,20 +74,18 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                >
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    >
+                    android:orientation="vertical">
 
                     <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler_list_product"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:id="@+id/recycler_list_product">
-                    </androidx.recyclerview.widget.RecyclerView>
+                        android:layout_marginLeft="15dp"
+                        android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
                 </LinearLayout>
 
 
