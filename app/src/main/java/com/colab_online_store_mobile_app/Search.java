@@ -53,6 +53,8 @@ public class Search extends Fragment {
     private RecyclerView recyclerView;
     EditText edit;
     ImageButton ib;
+    TextView address;
+
 
     @Nullable
     @Override
@@ -76,6 +78,23 @@ public class Search extends Fragment {
                 replaceFragment(fragment);
             }
         });
+        address = (TextView) rootView.findViewById(R.id.address_list_product);
+        String kuka = sharedPreferences.getString("user", "");
+        if(sharedPreferences.getString(kuka, "").isEmpty()){
+            address.setText("Укажите свое адрес в профиле");
+        }
+        else{
+            address.setText(sharedPreferences.getString(kuka, ""));
+        }
+        address.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Fragment fragment = null;
+                fragment = new Profile();
+                replaceFragment(fragment);
+            }
+        });
+        edit.setText(sharedPreferences.getString("search",""));
         return rootView;
 
 
@@ -164,7 +183,7 @@ public class Search extends Fragment {
 
 
     private void initRecyclerView(){
-        RecyclerSearch adapter = new RecyclerSearch(getActivity(), idProduct, titleProduct, descProduct, priceProduct, descProduct,imageProduct);
+        RecyclerSearch adapter = new RecyclerSearch(getActivity(), idProduct, titleProduct, descProduct, priceProduct, slugProduct, imageProduct);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
@@ -176,9 +195,10 @@ public class Search extends Fragment {
         descProduct.clear();
         priceProduct.clear();
         imageProduct.clear();
+        slugProduct.clear();
 
 
-        RecyclerSearch adapter = new RecyclerSearch(getActivity(), idProduct, titleProduct, descProduct, priceProduct, descProduct, imageProduct);
+        RecyclerSearch adapter = new RecyclerSearch(getActivity(), idProduct, titleProduct, descProduct, priceProduct, slugProduct, imageProduct);
         adapter.notifyDataSetChanged();
 
         recyclerView.setAdapter(adapter);

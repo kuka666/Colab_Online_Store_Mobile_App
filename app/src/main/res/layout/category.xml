@@ -1,271 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <LinearLayout
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_marginLeft="10dp">
-        <LinearLayout
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:id="@+id/header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <EditText
-                android:id="@+id/edit_search"
-                android:layout_width="330dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="5dp"
-                android:background="@drawable/seacrcher"
-                android:hint="Find any product"
-                android:paddingLeft="10dp"/>
-            <ImageButton
-                android:id="@+id/search"
-                android:layout_marginTop="20dp"
-                android:layout_width="45dp"
-                android:layout_height="50dp"
-                android:src="@drawable/ic_baseline_search_24"
-                android:backgroundTint="@color/colorAccent"
-                android:background="@drawable/rounded_corner"/>
-        </LinearLayout>
-        <!--Fruit and Vegetables-->
+            android:layout_alignParentTop="true">
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/logo" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/address_list_product"
+                android:text="Укажите адрес в профиле"
+                android:layout_marginLeft="200dp"
+                android:textColor="@color/black"
+                android:layout_marginTop="40dp"/>
+
+
+        </RelativeLayout>
+
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="20dp"
-            android:background="@color/white">
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@drawable/fruit"/>
+            android:id="@+id/scroll_view"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_below="@+id/header"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
                 <TextView
-                    android:layout_width="260dp"
+                    android:id="@+id/category"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="40dp"
-                    android:layout_gravity="center"
-                    android:textColor="@color/black"
-                    android:textSize="18dp"
-                    android:text="Fruits and Vegetables" />
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/chevron"
-                    android:layout_gravity="center"/>
+                    android:text="Category:"
+                    android:layout_marginLeft="20dp"
+                    android:textSize="25sp"
+                    android:textColor="@color/black"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler_list_product"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="15dp"></androidx.recyclerview.widget.RecyclerView>
+                </LinearLayout>
+
+
+            </LinearLayout>
+
 
         </LinearLayout>
-        <!--Dairy Product-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="20dp"
-            android:background="@color/white">
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/milk"/>
-            <TextView
-                android:layout_width="260dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
-                android:layout_gravity="center"
-                android:textColor="@color/black"
-                android:textSize="18dp"
-                android:text="Dairy Product" />
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/chevron"
-                android:layout_gravity="center"/>
-
-        </LinearLayout>
-        <!--Meat Product-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="20dp"
-            android:background="@color/white">
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/meat"/>
-            <TextView
-                android:layout_width="260dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
-                android:layout_gravity="center"
-                android:textColor="@color/black"
-                android:textSize="18dp"
-                android:text="Meat Products" />
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/chevron"
-                android:layout_gravity="center"/>
-
-        </LinearLayout>
-        <!--Drinks and Alcohol-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="20dp"
-            android:background="@color/white">
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/drinks"/>
-            <TextView
-                android:layout_width="260dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
-                android:layout_gravity="center"
-                android:textColor="@color/black"
-                android:textSize="18dp"
-                android:text="Drinks and Alcohol" />
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/chevron"
-                android:layout_gravity="center"/>
-
-        </LinearLayout>
-        <!--Bread and pastries-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="20dp"
-            android:background="@color/white">
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/bread"/>
-            <TextView
-                android:layout_width="260dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
-                android:layout_gravity="center"
-                android:textColor="@color/black"
-                android:textSize="18dp"
-                android:text="Bread and pastries" />
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/chevron"
-                android:layout_gravity="center"/>
-
-        </LinearLayout>
-        <!--Sweets-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="20dp"
-            android:background="@color/white">
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/sweets"/>
-            <TextView
-                android:layout_width="260dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
-                android:layout_gravity="center"
-                android:textColor="@color/black"
-                android:textSize="18dp"
-                android:text="Sweets" />
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/chevron"
-                android:layout_gravity="center"/>
-
-        </LinearLayout>
-        <!--Zoo Product-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="20dp"
-            android:background="@color/white">
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/bone"/>
-            <TextView
-                android:layout_width="260dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
-                android:layout_gravity="center"
-                android:textColor="@color/black"
-                android:textSize="18dp"
-                android:text="Zoo Product" />
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/chevron"
-                android:layout_gravity="center"/>
-
-        </LinearLayout>
-        <!--Cereals Canned Snacks-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="20dp"
-            android:background="@color/white">
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/snacks"/>
-            <TextView
-                android:layout_width="260dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
-                android:layout_gravity="center"
-                android:textColor="@color/black"
-                android:textSize="18dp"
-                android:text="Cereals Canned Snacks" />
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/chevron"
-                android:layout_gravity="center"/>
-
-        </LinearLayout>
-        <!--Pharmacy-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="20dp"
-            android:background="@color/white">
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/pharmacy"/>
-            <TextView
-                android:layout_width="260dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
-                android:layout_gravity="center"
-                android:textColor="@color/black"
-                android:textSize="18dp"
-                android:text="Pharmacy" />
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/chevron"
-                android:layout_gravity="center"/>
-
-        </LinearLayout>
-    </LinearLayout>
-
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

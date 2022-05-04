@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
                                 selectedFragment = new ListProduct();
                                 break;
                             case R.id.navigation_catalog:
-                                selectedFragment = new Category();
+                                selectedFragment = new Catalog();
                                 break;
                             case R.id.nav_cart:
                                 selectedFragment = new Summary();

@@ -122,7 +122,7 @@ public class RecyclerListProduct extends RecyclerView.Adapter<RecyclerListProduc
 
                                 String message = "+ to cart";
                                 Toast.makeText(view.getContext(), message, Toast.LENGTH_SHORT).show();
-
+                                Log.d("fail", my_token + " " + data);
                             }
 
                         }else {
@@ -168,9 +168,5 @@ public class RecyclerListProduct extends RecyclerView.Adapter<RecyclerListProduc
             parentLayout = itemView.findViewById(R.id.parent_layout);
         }
     }
-
-
-
-
 
 }

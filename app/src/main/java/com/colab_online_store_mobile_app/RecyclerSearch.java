@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -38,41 +39,103 @@ public class RecyclerSearch extends RecyclerView.Adapter<RecyclerSearch.ViewHold
     private ArrayList<Integer> mPrice = new ArrayList<>();
     private ArrayList<String> mSlug = new ArrayList<>();
     private ArrayList<String> mImage = new ArrayList<>();
-
+    ImageButton button;
 
 
     private Context mContext;
 
 
-    public RecyclerSearch(Context context, ArrayList<Integer> idShowPost, ArrayList<String> Title, ArrayList<String> Desc, ArrayList<Integer> Price, ArrayList<String> Slug, ArrayList<String> Image) {
+    public RecyclerSearch(Context context, ArrayList<Integer> idShowPost, ArrayList<String> Title, ArrayList<String> Desc, ArrayList<Integer> Price,  ArrayList<String> Slug, ArrayList<String> Image ) {
         mIdProduct = idShowPost;
         mTitle = Title;
         mDesc = Desc;
         mPrice = Price;
         mSlug = Slug;
         mImage = Image;
+
         mContext = context;
     }
 
     @Override
-    public RecyclerSearch.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclersumm, parent, false);
-        RecyclerSearch.ViewHolder holder = new RecyclerSearch.ViewHolder(view);
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_category, parent, false);
+        ViewHolder holder = new ViewHolder(view);
+        button = view.findViewById(R.id.btn_add_cart);
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(RecyclerSearch.ViewHolder holder, final int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
 
         holder.TTitle.setText(String.valueOf(mTitle.get(position)));
         holder.TDesc.setText(String.valueOf(mDesc.get(position)));
-
         Integer int_price = mPrice.get(position);
-        String str_price  = int_price.toString() + " ₸";
+        String str_price  = int_price.toString() + "₸";
         holder.TPrice.setText(str_price);
+
+
         String str_image = mImage.get(position);
 
         Picasso.get().load(str_image).into(holder.TImage);
+
+
+        holder.parentLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                Bundle bundle = new Bundle();
+                bundle.putString("key_slug",mSlug.get(position));
+                AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                Fragment myFragment = new com.colab_online_store_mobile_app.DetailProduct();
+                myFragment.setArguments(bundle);
+                activity.getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, myFragment)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putString("key_slug",mSlug.get(position));
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(PostApi.API_URL)
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
+                String data = mSlug.get(position);
+                PostApi postApi= retrofit.create(PostApi.class);
+                SharedPreferences  sharedPreferences = mContext.getSharedPreferences("myPrefs", MODE_PRIVATE);
+                String my_token = sharedPreferences.getString("token","");
+                Call<ResponseBody> call = postApi.getCreateCart("Token "+my_token, data);
+                call.enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        if(response.isSuccessful()){
+
+                            if (response.body() != null) {
+
+                                String message = "+ to cart";
+                                Toast.makeText(view.getContext(), message, Toast.LENGTH_SHORT).show();
+
+                            }
+
+                        }else {
+                            Log.d("fail", my_token+ " "+ data);
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        Log.d("fail", t.getMessage() == null ? "" : t.getMessage());
+                    }
+                });
+            }
+        });
 
 
     }
@@ -90,6 +153,7 @@ public class RecyclerSearch extends RecyclerView.Adapter<RecyclerSearch.ViewHold
         TextView TPrice;
         ImageView TImage;
 
+
         LinearLayout parentLayout;
 
         public ViewHolder(View itemView) {
@@ -99,10 +163,8 @@ public class RecyclerSearch extends RecyclerView.Adapter<RecyclerSearch.ViewHold
             TDesc = itemView.findViewById(R.id.desc);
             TPrice = itemView.findViewById(R.id.price);
             TImage = itemView.findViewById(R.id.list_image);
-
             parentLayout = itemView.findViewById(R.id.parent_layout);
         }
     }
-
 
 }

@@ -50,6 +50,7 @@ public class Profile extends Fragment {
     EditText username,password,address,fname,lname,phonenumber;
     Button buttonLogout,save;
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -101,6 +102,7 @@ public class Profile extends Fragment {
         else{
             new ProfileLogin();
         }
+
         return rootView;
 
     }
