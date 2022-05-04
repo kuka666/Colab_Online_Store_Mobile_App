@@ -67,7 +67,7 @@ public class Search extends Fragment {
         ib.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String search_str  = edit.getText().toString();
+                String search_str  = edit.getText().toString().toLowerCase(Locale.ROOT);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString("search", search_str);
                 editor.commit();

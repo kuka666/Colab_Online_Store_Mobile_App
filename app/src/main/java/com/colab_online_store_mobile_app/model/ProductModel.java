@@ -22,7 +22,7 @@ public class ProductModel {
 //    private String image;
     private String cart_url;
     private String slug;
-
+    private String category;
 
     public ProductModel(Integer id,
                         String timestamp,
@@ -40,7 +40,8 @@ public class ProductModel {
                         String desc,
                         Integer price,
                         String cart_url,
-                        String slug
+                        String slug,
+                        String category
 
 
     ) {
@@ -62,6 +63,7 @@ public class ProductModel {
         this.price = price;
         this.cart_url = cart_url;
         this.slug = slug;
+        this.category = category;
     }
 
     public Integer getId() {return id;}
@@ -118,6 +120,8 @@ public class ProductModel {
     public String getSlug() {
         return slug;
     }
+
+    public String getCategory(){return category;}
 
 
 }
