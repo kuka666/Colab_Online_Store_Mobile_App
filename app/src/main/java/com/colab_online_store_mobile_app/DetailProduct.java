@@ -111,7 +111,7 @@ public class DetailProduct extends Fragment implements View.OnClickListener {
         PostApi postApi= retrofit.create(PostApi.class);
 
         Call<ProductModel> call = postApi.getDetailProduct(data);
-
+        Log.d("kuka",data);
         call.enqueue(new Callback<ProductModel>() {
             @Override
             public void onResponse(Call<ProductModel> call, Response<ProductModel> response) {

@@ -19,7 +19,7 @@ import retrofit2.http.Path;
 public interface PostApi {
 
 
-    String root = "http://192.168.0.155:8000/";
+    String root = "http://10.121.217.250:8000/";
     // http://192.168.0.155:8000/
     // 10.121.216.228
     String API_URL = root + "api/v1/";
@@ -49,5 +49,8 @@ public interface PostApi {
 
     @GET("clear/")
     Call<ResponseBody> getClearCart(@Header("Authorization")  String authToken);
+
+    @GET("delete-one/{slug}/")
+    Call<ResponseBody> getDeleteOne(@Header("Authorization") String authToken,  @Path(value = "slug", encoded = true) String slug);
 
 }

@@ -8,10 +8,14 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+
+import java.util.Locale;
 
 public class Catalog extends Fragment {
     LinearLayout fruit;
@@ -22,7 +26,10 @@ public class Catalog extends Fragment {
     LinearLayout snacks;
     LinearLayout drinks;
     LinearLayout meat;
+    LinearLayout bread;
     SharedPreferences sharedPreferences;
+    EditText edit;
+    ImageButton ib;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -37,6 +44,22 @@ public class Catalog extends Fragment {
         snacks = rootView.findViewById(R.id.snacks);
         drinks = rootView.findViewById(R.id.drinks);
         meat = rootView.findViewById(R.id.meat);
+        bread = rootView.findViewById(R.id.bread);
+        edit = (EditText) rootView.findViewById(R.id.edit_search);
+        ib = (ImageButton) rootView.findViewById(R.id.search);
+        ib.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String search_str  = edit.getText().toString().toLowerCase(Locale.ROOT);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("search", search_str);
+                editor.commit();
+                Fragment fragment = null;
+                fragment = new Search();
+                replaceFragment(fragment);
+            }
+        });
+
         fruit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -125,6 +148,18 @@ public class Catalog extends Fragment {
                 replaceFragment(fragment);
             }
         });
+        bread.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("category", "bread");
+                editor.commit();
+                Fragment fragment = null;
+                fragment = new Category();
+                replaceFragment(fragment);
+            }
+        });
+        edit.setText(sharedPreferences.getString("search",""));
 
         return rootView;
 

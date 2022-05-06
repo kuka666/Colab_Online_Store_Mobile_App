@@ -41,7 +41,7 @@ public class RecyclerSummary extends RecyclerView.Adapter<RecyclerSummary.ViewHo
     private ArrayList<Integer> mPrice = new ArrayList<>();
     private ArrayList<String> mSlug = new ArrayList<>();
     private ArrayList<String> mImage = new ArrayList<>();
-
+    private ImageButton cross;
 
 
     private Context mContext;
@@ -61,6 +61,7 @@ public class RecyclerSummary extends RecyclerView.Adapter<RecyclerSummary.ViewHo
     public RecyclerSummary.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclersumm, parent, false);
         RecyclerSummary.ViewHolder holder = new RecyclerSummary.ViewHolder(view);
+        cross = view.findViewById(R.id.cross);
         return holder;
     }
 
@@ -76,6 +77,58 @@ public class RecyclerSummary extends RecyclerView.Adapter<RecyclerSummary.ViewHo
         String str_image = mImage.get(position);
 
         Picasso.get().load(str_image).into(holder.TImage);
+        cross.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putString("key_slug",mSlug.get(position));
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(PostApi.API_URL)
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
+                String data = mSlug.get(position);
+                PostApi postApi= retrofit.create(PostApi.class);
+                SharedPreferences  sharedPreferences = mContext.getSharedPreferences("myPrefs", MODE_PRIVATE);
+                String my_token = sharedPreferences.getString("token","");
+                Call<ResponseBody> call = postApi.getDeleteOne("Token "+my_token, data);
+                Log.d(my_token, data);
+                call.enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        if(response.isSuccessful()){
+
+                            if (response.body() != null) {
+
+                                String message = "Deleted from cart";
+                                Toast.makeText(view.getContext(), message, Toast.LENGTH_SHORT).show();
+                                Log.d("kuka", my_token + " " + data);
+                                AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                                Fragment myFragment = new com.colab_online_store_mobile_app.Summary();
+                                myFragment.setArguments(bundle);
+                                activity.getSupportFragmentManager()
+                                        .beginTransaction()
+                                        .replace(R.id.fragment_container, myFragment)
+                                        .addToBackStack(null)
+                                        .commit();
+
+                            }
+
+                        }else {
+                            Log.d("fail", my_token + " " + data);
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        Log.d("fail", t.getMessage() == null ? "" : t.getMessage());
+                    }
+
+
+                });
+            }
+        });
 
 
 
@@ -109,6 +162,7 @@ public class RecyclerSummary extends RecyclerView.Adapter<RecyclerSummary.ViewHo
             parentLayout = itemView.findViewById(R.id.parent_layout);
         }
     }
+
 
 
 }

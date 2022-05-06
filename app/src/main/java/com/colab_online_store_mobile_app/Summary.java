@@ -40,6 +40,7 @@ public class Summary extends Fragment implements View.OnClickListener {
     private ArrayList<String> titleProduct = new ArrayList<>();
     private ArrayList<String> descProduct = new ArrayList<>();
     private ArrayList<Integer> priceProduct = new ArrayList<>();
+    private ArrayList<String> slugProduct = new ArrayList<>();
     private ArrayList<String> imageProduct = new ArrayList<>();
 
     private RecyclerView recyclerView;
@@ -216,6 +217,8 @@ public class Summary extends Fragment implements View.OnClickListener {
                             String str_desc = product.getDesc();
                             descProduct.add(str_desc);
 
+                            String str_slug = product.getSlug();
+                            slugProduct.add(str_slug);
 
                             Integer price_product = product.getPrice();
                             priceProduct.add(price_product);
@@ -248,8 +251,9 @@ public class Summary extends Fragment implements View.OnClickListener {
     }
 
 
+
     private void initRecyclerView(){
-        RecyclerSummary adapter = new RecyclerSummary(getActivity(), idProduct, titleProduct, descProduct, priceProduct, descProduct,imageProduct);
+        RecyclerSummary adapter = new RecyclerSummary(getActivity(), idProduct, titleProduct, descProduct, priceProduct, slugProduct,imageProduct);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
@@ -260,10 +264,11 @@ public class Summary extends Fragment implements View.OnClickListener {
         titleProduct.clear();
         descProduct.clear();
         priceProduct.clear();
+        slugProduct.clear();
         imageProduct.clear();
 
 
-        RecyclerSummary adapter = new RecyclerSummary(getActivity(), idProduct, titleProduct, descProduct, priceProduct, descProduct, imageProduct);
+        RecyclerSummary adapter = new RecyclerSummary(getActivity(), idProduct, titleProduct, descProduct, priceProduct, slugProduct, imageProduct);
         adapter.notifyDataSetChanged();
 
         recyclerView.setAdapter(adapter);

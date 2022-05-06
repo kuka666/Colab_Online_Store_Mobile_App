@@ -33,12 +33,14 @@
                     android:text="dsadas"
                     android:textColor="@color/black"
                     android:textSize="23sp"/>
+
                 <ImageButton
-                    android:layout_marginTop="3dp"
+                    android:id="@+id/cross"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/cross"
-                    android:background="@color/white"/>
+                    android:layout_marginTop="3dp"
+                    android:background="@color/white"
+                    android:src="@drawable/cross" />
             </LinearLayout>
 
             <TextView
