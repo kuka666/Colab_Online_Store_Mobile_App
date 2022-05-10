@@ -44,9 +44,9 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="175dp"
+            android:layout_height="90dp"
             android:text="Помимо участия в процессе расщепления белков, бромелайн также оказывает противовоспалительное воздействие и борется с отёками. Вместе с содержащейся в ананасе клетчаткой, этот фермент способствует нормализации перистальтики кишечника, благотворно влияет на пищеварение."
-            android:textSize="18dp"
+            android:textSize="18sp"
             android:id="@+id/ltv_dp_desc"
             />
 
